@@ -15,7 +15,7 @@ zig build run       # run glyf
 zig build test      # run unit tests
 ```
 
-Requires Zig 0.14 or newer.
+Requires Zig 0.15.2 or newer.
 
 ## What makes glyf different
 

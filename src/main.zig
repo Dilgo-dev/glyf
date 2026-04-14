@@ -5,8 +5,7 @@
 const std = @import("std");
 
 pub fn main() !void {
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("glyf 0.0.0\n", .{});
+    std.debug.print("glyf 0.0.0\n", .{});
 }
 
 test "smoke" {

@@ -1,7 +1,8 @@
 .{
-    .name = "glyf",
+    .name = .glyf,
     .version = "0.0.0",
-    .minimum_zig_version = "0.14.0",
+    .fingerprint = 0x9c54243019c83827,
+    .minimum_zig_version = "0.15.2",
     .dependencies = .{},
     .paths = .{
         "build.zig",
