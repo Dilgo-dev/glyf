@@ -41,7 +41,16 @@ pub fn build(b: *std.Build) void {
     const pty_tests = b.addTest(.{ .root_module = pty_mod });
     const run_pty_tests = b.addRunArtifact(pty_tests);
 
+    const vt_mod = b.createModule(.{
+        .root_source_file = b.path("src/vt.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    const vt_tests = b.addTest(.{ .root_module = vt_mod });
+    const run_vt_tests = b.addRunArtifact(vt_tests);
+
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_unit_tests.step);
     test_step.dependOn(&run_pty_tests.step);
+    test_step.dependOn(&run_vt_tests.step);
 }
