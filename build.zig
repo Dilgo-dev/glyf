@@ -49,8 +49,17 @@ pub fn build(b: *std.Build) void {
     const vt_tests = b.addTest(.{ .root_module = vt_mod });
     const run_vt_tests = b.addRunArtifact(vt_tests);
 
+    const grid_mod = b.createModule(.{
+        .root_source_file = b.path("src/grid.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    const grid_tests = b.addTest(.{ .root_module = grid_mod });
+    const run_grid_tests = b.addRunArtifact(grid_tests);
+
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_unit_tests.step);
     test_step.dependOn(&run_pty_tests.step);
     test_step.dependOn(&run_vt_tests.step);
+    test_step.dependOn(&run_grid_tests.step);
 }
