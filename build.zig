@@ -32,18 +32,16 @@ pub fn build(b: *std.Build) void {
     });
     const run_unit_tests = b.addRunArtifact(unit_tests);
 
+    const pty_mod = b.createModule(.{
+        .root_source_file = b.path("src/pty.zig"),
+        .target = target,
+        .optimize = optimize,
+        .link_libc = true,
+    });
+    const pty_tests = b.addTest(.{ .root_module = pty_mod });
+    const run_pty_tests = b.addRunArtifact(pty_tests);
+
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_unit_tests.step);
-
-    if (target.result.os.tag != .windows) {
-        const pty_mod = b.createModule(.{
-            .root_source_file = b.path("src/pty.zig"),
-            .target = target,
-            .optimize = optimize,
-            .link_libc = true,
-        });
-        const pty_tests = b.addTest(.{ .root_module = pty_mod });
-        const run_pty_tests = b.addRunArtifact(pty_tests);
-        test_step.dependOn(&run_pty_tests.step);
-    }
+    test_step.dependOn(&run_pty_tests.step);
 }
